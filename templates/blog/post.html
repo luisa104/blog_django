@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row text-center">
+            <div class="col-12 mt-5 mb-3">
+                <!-- Blog Content-->
+                <h1 class="mb-5">Publicaciones</h1>
+                <form method='GET' class="w-100">
+                    <div class="input-group mb-3">
+                        <input type='text' class="form-control" name='buscar'>
+                        <input class="button btn-dark" type='submit' value="Buscar">
+                    </div>
+                </form>
+            </div>
+
+            <div class="col mb-3">
+                <form method="get">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-auto d-flex">
+                            <input class="form-control" type="date" name="date1">
+                        </div>
+
+                        <div class="col-auto d-flex">
+                            <input class="form-control" type="date" name="date2">
+                        </div>
+                        <div class="col-auto">
+                            <input class="button btn-primary" type='submit' value="Filtrar">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center">
+            {% if user.is_authenticated %}
+                <a href="{% url 'post_create' %}" class="btn btn-outline-primary mt-3">Agregar</a>
+            {% endif %}
+        </div>
+
+
+        <!-- Divider-->
+        <hr class="my-4"/>
+
+        <ul>
+            {% for post in object_list %}
+                <!-- Post preview-->
+                <div class="post-preview">
+
+                    <a href="{% url 'post_detail' post.slug %}">
+                        <h2 class="post-title">{{ post.title }}</h2>
+                        <h3 class="post-subtitle">{{ post.theme }}</h3>
+                    </a>
+                    <p class="post-meta">
+                        Publicado por
+                        <strong>
+                        {% if post.author.first_name and post.author.last_name %}
+                            {{ post.author.first_name }} {{ post.author.last_name }}
+                        {% else %}
+                            {{ post.author.username }}
+                        {% endif %}
+                        </strong>
+                        el {{ post.create_date }}
+                    </p>
+
+                    {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                            <a href="{% url 'post_update' post.slug %}" class="btn btn-outline-success">Editar</a>
+                            <a href="{% url 'post_delete' post.slug %}" class="btn btn-outline-danger">Eliminar</a>
+                        {% elif user.is_staff %}
+                            <a href="{% url 'post_update' post.slug %}" class="btn btn-outline-success">Editar</a>
+                            <a href="{% url 'post_delete' post.slug %}" class="btn btn-outline-danger">Eliminar</a>
+                        {% elif user.username == post.author.username %}
+                            <a href="{% url 'post_update' post.slug %}" class="btn btn-outline-success">Editar</a>
+                            <a href="{% url 'post_delete' post.slug %}" class="btn btn-outline-danger">Eliminar</a>
+
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+                <!-- Divider-->
+                <hr class="my-4"/>
+            {% empty %}
+                <li>No hay publicaciones disponibles.</li>
+            {% endfor %}
+        </ul>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="...">
+                        <ul class="pagination d-flex justify-content-center">
+
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                                       tabindex="{{ page_obj.number }}-1">Anterior</a>
+                                </li>
+                            {% endif %}
+
+                            <li class="page-item active">
+                                <a class="page-link" href="#">{{ page_obj.number }}<span
+                                        class="sr-only">(current)</span></a>
+                            </li>
+
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

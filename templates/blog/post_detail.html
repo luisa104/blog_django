@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    <!-- Page Header-->
+    <header class="masthead" style="background-image: url({{ object.image_front.url }})">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="post-heading">
+                        <h1>{{ object.title }}</h1>
+                        <h2 class="subheading">{{ object.theme }}</h2>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <!-- Post Content-->
+    <article class="mb-4">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <p>{{ object.description }}</p>
+                    <img src="{{ object.image.url }}" class="img-fluid w-100 mt-3 mb-5" alt="">
+                    <p class="post-meta">
+                        Publicado por
+                        <strong>
+                        {% if object.author.first_name and object.author.last_name %}
+                            {{ object.author.first_name }} {{ object.author.last_name }}
+                        {% else %}
+                            {{ object.author.username }}
+                        {% endif %}
+                        </strong>
+                        el {{ object.create_date }}
+                    </p>
+
+
+
+
+
+
+
+                    <!-- Divider-->
+                    <hr class="my-5"/>
+                    <div class="">
+                        <div class="list-group">
+                            {% for comment in comments %}
+                                <a class="list-group-item list-group-item-action " aria-current="true">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">{{ comment.user }}</h5>
+                                        <small>{{ comment.create_date }}</small>
+                                    </div>
+                                    <p class="mb-1">{{ comment.content }}</p>
+
+                                </a>
+                            {% endfor %}
+                        {% if user.is_authenticated %}
+                            <div class="my-3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="my-2">Comentar</h5>
+                                    </div>
+                                    <div class="col-12">
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            {{ form.user }}
+                                            {{ form.post }}
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                      name="content" required></textarea>
+                                            <button type="submit" class="button btn-primary mt-3">Comentar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </article>
+
+{% endblock content %}

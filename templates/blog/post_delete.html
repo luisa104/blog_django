@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="">
+        <div class="card">
+            <div class="text-center">
+                <div class="pt-5 p-2">
+                    <i class="fas fa-times-circle" style="font-size: 100px; color: #e74a3b;"></i>
+                </div>
+            <h3 class="p-2 mx-2">¿Estas seguro que deseas eliminar la publicacion titulado <strong>{{ object.title }} </strong>?</h3>
+
+            <form method="post">
+            {% csrf_token %}
+
+                <input type="submit" class="btn btn-danger fa-10x m-3" value="Sí">
+                <a href="{% url 'post' %}" class="btn btn-secondary m-3">No</a>
+            </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="p-2 p-md-5">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-xxl-4 col-lg-6 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.author.label }}<span class="text-danger">*</span></label>
+                                {{ form.author }}
+                                <div class="form-text text-danger">{{ form.errors.author }}</div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-lg-6 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.title.label }}<span class="text-danger">*</span></label>
+                                {{ form.title }}
+                                <div class="form-text text-danger">{{ form.errors.title }}</div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-lg-6 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.slug.label }}<span class="text-danger">*</span></label>
+                                {{ form.slug }}
+                                <div class="form-text text-danger">{{ form.errors.slug }}</div>
+                            </div>
+                        </div>
+                         <div class="col-xxl-4 col-lg-6 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.category.label }}<span class="text-danger">*</span></label>
+                                {{ form.category }}
+                                <div class="form-text text-danger">{{ form.errors.category }}</div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-lg-6 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.image_front.label }}<span class="text-danger">*</span></label>
+                                {{ form.image_front }}
+                                <div class="form-text text-danger">{{ form.errors.image_front }}</div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-lg-6 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.image.label }}<span class="text-danger">*</span></label>
+                                {{ form.image }}
+                                <div class="form-text text-danger">{{ form.errors.image }}</div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.theme.label }}<span class="text-danger">*</span></label>
+                                {{ form.theme }}
+                                <div class="form-text text-danger">{{ form.errors.theme }}</div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xxl-8 col-md-12">
+
+                            <div class="mb-3">
+                                 <label class="form-label">{{ form.description.label }}<span class="text-danger">*</span></label>
+
+                                {{ form.description }}
+                                <div class="form-text text-danger">{{ form.errors.description }}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.activate_date.label }}<span class="text-danger">*</span></label>
+                                <input type="datetime-local" class="form-control" name="activate_date" min="{{ datetimenow }}">
+                                <div class="form-text text-danger">{{ form.errors.activate_date }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.due_date.label }}</label>
+                                <input type="datetime-local" class="form-control" name="due_date" min="{{ datetimenow }}">
+                                <div class="form-text text-danger">{{ form.errors.due_date }}</div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 mb-5">
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.is_activate.label }}</label>
+                                {{ form.is_activate }}
+                                <div class="form-text text-danger">{{ form.errors.is_activate }}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            <div class="mb-3">
+                                <input type="submit" class="btn btn-outline-primary" value="Editar">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            <div class="mb-3">
+                                <a href="{% url 'post' %}" class="btn btn-outline-danger">Cancelar</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block script %}
+    <script>
+        $(function () {
+            $("#datetimepicker1").datetimepicker();
+        });
+    </script>
+
+
+{% endblock script %}

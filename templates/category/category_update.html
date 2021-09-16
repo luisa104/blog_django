@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%  block content %}
+    <div class="container mt-5 pt-5">
+        <div class="card">
+            <div class="p-2 p-md-5">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.name.label }}<span class="text-danger">*</span></label>
+                                {{ form.name }}
+                                <div class="form-text text-danger">{{ form.errors.name }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.slug.label }}<span class="text-danger">*</span></label>
+                                {{ form.slug }}
+                                <div class="form-text text-danger">{{ form.errors.slug }}</div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            <div class="mb-3">
+                                <input type="submit" class="btn btn-outline-primary" value="Editar">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            <div class="mb-3">
+                                <a href="{% url 'category' %}" class="btn btn-outline-danger">Cancelar</a>
+                            </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

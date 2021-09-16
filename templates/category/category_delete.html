@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container my-5 text-center">
+        <form method="post">
+        {% csrf_token %}
+        <h2 class="my-5">¿Desea eliminar este registro?</h2>
+        <button type="submit" class="btn btn-outline-danger">Si</button>
+        <a href="{% url 'category' %}" class="btn btn-outline-secondary">No</a>
+    </form>
+    </div>
+
+
+{% endblock content %}

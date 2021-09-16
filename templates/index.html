@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block header %}
+    <!-- Page Header-->
+    <header class="masthead bg-home" style="background-image: url('/static/assets/img/home-bg.jpg');">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>Blog</h1>
+                        <span class="subheading">Bienvenido al Blog de Luisa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+
+
+{% block content %}
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+
+                {% for post in posts %}
+                <!-- Post preview-->
+                <div class="post-preview">
+                    <a href="{% url 'post_detail' post.slug %}">
+                        <h2 class="post-title">{{ post.title }}</h2>
+                        <h3 class="post-subtitle">{{ post.theme }}</h3>
+                    </a>
+                    <p class="post-meta">
+                        Publicado por
+                        <strong>
+                        {% if post.author.first_name and post.author.last_name %}
+                            {{ post.author.first_name }} {{ post.author.last_name }}
+                        {% else %}
+                            {{ post.author.username }}
+                        {% endif %}
+                        </strong>
+                        el {{ post.create_date }}
+                    </p>
+                </div>
+                <!-- Divider-->
+                <hr class="my-4"/>
+                {% endfor %}
+
+                <!-- Pager-->
+                <div class="d-flex justify-content-end mb-4">
+                    <a class="btn btn-primary text-uppercase" href="{% url 'post' %}">Ver más →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
