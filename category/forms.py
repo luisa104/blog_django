@@ -11,4 +11,5 @@ class CategoryForm(ModelForm):
 
     class Meta:
         model = Category
+        #campos que se quiere mostrar
         fields = ['name', 'slug']

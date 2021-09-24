@@ -8,9 +8,6 @@ from category.forms import CategoryForm
 from category.models import Category
 
 
-
-
-
 class CategoryView(LoginRequiredMixin, TemplateView):
     template_name = "category/category.html"
      #mandar todas las categorias
@@ -18,9 +15,6 @@ class CategoryView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         return context
-
-
-
 
 
 class CategoryCreateView(LoginRequiredMixin, CreateView):

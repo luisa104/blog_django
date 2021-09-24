@@ -85,17 +85,18 @@ WSGI_APPLICATION = 'blog_django.wsgi.application'
 
 #DATABASES = {
  #  'default': {
- #     'ENGINE': 'django.db.backends.sqlite3',
- #      'NAME': BASE_DIR / 'db.sqlite3',
- #  }
+  #    'ENGINE': 'django.db.backends.sqlite3',
+  #    'NAME': BASE_DIR / 'db.sqlite3',
+  # }
 #}
+
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'blog_djangodb',
-        'USER': 'my_user',
-        'PASSWORD': 'my_password',
+        'USER': 'postgres',
+        'PASSWORD': '1193511517',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -123,15 +124,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'es-co'
 
-TIME_ZONE = 'America/Bogota'
+TIME_ZONE = 'America/Bogota'  # 'UTC'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -154,6 +155,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+#redigir al inicio
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

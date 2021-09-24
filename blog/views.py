@@ -15,17 +15,17 @@ from blog.tasks import PostTask
 
 
 class PostListView(ListView):
-    PostTask.post_update_is_activate()
     model = Post
     template_name = "blog/post.html"
     paginate_by = 6
     ordering = ['create_date']
-
+    #obtener los datos que se envian a traves de un formulario por el metodo get
     def get_queryset(self):
+        PostTask.post_update_is_activate()
         queryset = self.request.GET.get("buscar")
         queryset_date1 = self.request.GET.get("date1")
         queryset_date2 = self.request.GET.get("date2")
-
+        #una consulta al modelo
         object_list = self.model.objects.filter(is_activate=True)
         if queryset:
             object_list = self.model.objects.filter(
@@ -51,16 +51,19 @@ class PostDetailView(DetailView, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        #
         context['comments'] = Comment.objects.filter(post__slug=self.object.slug)
         return context
 
     def get_success_url(self):
+        #recuperando el slug de detail
         post_id = self.request.POST.get('post')
         post_slug = Post.objects.filter(id=post_id).values('slug')[0]['slug']
         return reverse('post_detail', kwargs={'slug': post_slug})
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        #para que el formulario pueda recibir el requet y el object
         kwargs['request'] = self.request
         kwargs['object'] = self.object
         return kwargs
@@ -71,11 +74,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = "blog/post_create.html"
     success_url = reverse_lazy('post')
     form_class = PostForm
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['datetimenow'] = datetime.now().strftime("%Y-%m-%dT%H:%M")
-        return context
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
